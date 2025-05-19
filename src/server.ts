@@ -1,5 +1,5 @@
 import WebSocket, { WebSocketServer } from "ws";
-import { MessageType } from "./types/message";
+import { MessageType } from "./types/MessageType";
 import { userService } from "./services/userService";
 import { parseUserInput } from "./utils/userInputParser";
 

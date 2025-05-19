@@ -1,6 +1,6 @@
-import { MessageType } from "./message";
+import { MessageType } from "./MessageType";
 
-export interface Command {
+export interface CommandMessage {
     type: MessageType.Command;
     name: string;
     args: string[];
@@ -9,4 +9,5 @@ export interface ChatMessage {
     type: MessageType.Message;
     content: string;
 }
-export type UserInput = Command | ChatMessage;
+
+export type UserInput = CommandMessage | ChatMessage;

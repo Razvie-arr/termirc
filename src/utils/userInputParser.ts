@@ -1,5 +1,5 @@
-import { UserInput } from "../types/userInput";
-import { MessageType } from "../types/message";
+import { UserInput } from "../types/UserInput";
+import { MessageType } from "../types/MessageType";
 
 export function parseUserInput(text: string): UserInput {
     const trimmed = text.trim();
