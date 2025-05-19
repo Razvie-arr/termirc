@@ -4,7 +4,10 @@
   "description": "A minimalistic IRC-inspired chat application that runs entirely in the terminal. Based on Typescript and Node.js.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "start:server": "node dist/server.js",
+    "dev:server": "ts-node src/server.ts",
+    "dev:client": "ts-node src/client.ts"
   },
   "repository": {
     "type": "git",
@@ -18,6 +21,14 @@
   },
   "homepage": "https://github.com/Razvie-arr/termirc#readme",
   "dependencies": {
+    "@libsql/client": "^0.15.6",
+    "drizzle-orm": "^0.43.1",
     "prettier": "^3.5.3"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.19",
+    "@types/ws": "^8.18.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
   }
 }
