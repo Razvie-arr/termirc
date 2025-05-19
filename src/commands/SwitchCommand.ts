@@ -1,12 +1,11 @@
 import { Command } from "./Command";
 import WebSocket from "ws";
-import { CommandMessage } from "../types/UserInput";
 import { MessageType } from "../types/MessageType";
 import { roomService } from "../services/roomService";
 import { normalizeRoomName } from "../utils/normalizeRoomName";
 
-export class PartCommand implements Command {
-    readonly name = "part";
+export class SwitchCommand implements Command {
+    readonly name = "switch";
 
     execute(ws: WebSocket, args: string[]): void {
         const room = normalizeRoomName(args[0]);
@@ -14,15 +13,22 @@ export class PartCommand implements Command {
             return ws.send(
                 JSON.stringify({
                     type: MessageType.Error,
-                    payload: "Usage: /part #room",
+                    payload: "Usage: /switch #room",
                 }),
             );
         }
-        roomService.partRoom(ws, room);
+        if (!roomService.switchRoom(ws, room)) {
+            return ws.send(
+                JSON.stringify({
+                    type: MessageType.Error,
+                    payload: `You’re not in ${room}.`,
+                }),
+            );
+        }
         ws.send(
             JSON.stringify({
                 type: MessageType.System,
-                payload: `Left ${room}`,
+                payload: `Active room set to ${room}`,
             }),
         );
     }

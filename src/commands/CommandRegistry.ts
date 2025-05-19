@@ -3,6 +3,8 @@ import { Command } from "./Command";
 import { JoinCommand } from "./JoinCommand";
 import { PartCommand } from "./PartCommand";
 import { CommandMessage } from "../types/UserInput";
+import { SwitchCommand } from "./SwitchCommand";
+import { ListCommand } from "./ListCommand";
 
 export class CommandRegistry {
     private map = new Map<string, Command>();
@@ -23,8 +25,13 @@ export class CommandRegistry {
                 }),
             );
         }
-        handler.execute(ws, cmd);
+        handler.execute(ws, cmd.args);
     }
 }
 
-export const commandRegistry = new CommandRegistry([new JoinCommand(), new PartCommand()]);
+export const commandRegistry = new CommandRegistry([
+    new JoinCommand(),
+    new PartCommand(),
+    new SwitchCommand(),
+    new ListCommand(),
+]);

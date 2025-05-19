@@ -2,6 +2,7 @@ import WebSocket, { WebSocketServer } from "ws";
 import { MessageType } from "./types/MessageType";
 import { userService } from "./services/userService";
 import { parseUserInput } from "./utils/userInputParser";
+import { commandRegistry } from "./commands/CommandRegistry";
 
 console.log("Starting Termirc server...");
 const wss = new WebSocketServer({ port: 8080 });
@@ -30,8 +31,8 @@ wss.on("connection", (ws: WebSocket) => {
 
         const userInput = parseUserInput(text);
         if (userInput.type === MessageType.Command) {
-            // TODO: implement
             console.log("Command got:", userInput);
+            commandRegistry.dispatch(ws, userInput);
         } else if (userInput.type === MessageType.Message) {
             // TODO: implement
             console.log("Message got:", userInput);
