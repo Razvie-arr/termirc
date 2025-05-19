@@ -1,6 +1,5 @@
 import { Command } from "./Command";
 import WebSocket from "ws";
-import { CommandMessage } from "../types/UserInput";
 import { MessageType } from "../types/MessageType";
 import { roomService } from "../services/roomService";
 import { normalizeRoomName } from "../utils/normalizeRoomName";
