@@ -1,8 +1,8 @@
 import { Command } from "./Command";
 import WebSocket from "ws";
-import { MessageType } from "../types/MessageType";
 import { roomService } from "../services/roomService";
 import { normalizeRoomName } from "../utils/normalizeRoomName";
+import { sendError, sendSystem } from "../utils/messageSender";
 
 export class PartCommand implements Command {
     readonly name = "part";
@@ -10,19 +10,9 @@ export class PartCommand implements Command {
     execute(ws: WebSocket, args: string[]): void {
         const room = normalizeRoomName(args[0]);
         if (!room) {
-            return ws.send(
-                JSON.stringify({
-                    type: MessageType.Error,
-                    payload: "Usage: /part #room",
-                }),
-            );
+            return sendError(ws, "Usage: /part #room");
         }
         roomService.partRoom(ws, room);
-        ws.send(
-            JSON.stringify({
-                type: MessageType.System,
-                payload: `Left ${room}`,
-            }),
-        );
+        sendSystem(ws, `Left ${room}`);
     }
 }
