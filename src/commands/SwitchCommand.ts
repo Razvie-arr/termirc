@@ -2,7 +2,7 @@ import { Command } from './Command';
 import WebSocket from 'ws';
 import { roomService } from '../services/roomService';
 import { normalizeRoomName } from '../utils/normalizeRoomName';
-import { sendError, sendSystem } from '../utils/messageSender';
+import { sendError, sendInfo } from '../messageSenders/directMessageSender';
 
 export class SwitchCommand implements Command {
     readonly name = 'switch';
@@ -15,6 +15,6 @@ export class SwitchCommand implements Command {
         if (!roomService.switchRoom(ws, room)) {
             return sendError(ws, `You’re not in ${room}.`);
         }
-        sendSystem(ws, `Active room set to ${room}`);
+        sendInfo(ws, `Active room set to ${room}`);
     }
 }

@@ -1,10 +1,11 @@
-import WebSocket from "ws";
-import { Command } from "./Command";
-import { JoinCommand } from "./JoinCommand";
-import { PartCommand } from "./PartCommand";
-import { CommandMessage } from "../types/UserInput";
-import { SwitchCommand } from "./SwitchCommand";
-import { ListCommand } from "./ListCommand";
+import WebSocket from 'ws';
+import { Command } from './Command';
+import { JoinCommand } from './JoinCommand';
+import { PartCommand } from './PartCommand';
+import { CommandMessage } from '../types/UserInput';
+import { SwitchCommand } from './SwitchCommand';
+import { ListCommand } from './ListCommand';
+import { sendError } from '../messageSenders/directMessageSender';
 
 export class CommandRegistry {
     private map = new Map<string, Command>();
@@ -18,12 +19,7 @@ export class CommandRegistry {
     dispatch(ws: WebSocket, cmd: CommandMessage) {
         const handler = this.map.get(cmd.name);
         if (!handler) {
-            return ws.send(
-                JSON.stringify({
-                    type: "error",
-                    payload: `Unknown command: /${cmd.name}`,
-                }),
-            );
+            return sendError(ws, `Unknown command: /${cmd.name}`);
         }
         handler.execute(ws, cmd.args);
     }
