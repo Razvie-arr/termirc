@@ -1,0 +1,23 @@
+{
+  "name": "termirc",
+  "version": "1.0.0",
+  "description": "A minimalistic IRC-inspired chat application that runs entirely in the terminal. Based on Typescript and Node.js.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Razvie-arr/termirc.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Razvie-arr/termirc/issues"
+  },
+  "homepage": "https://github.com/Razvie-arr/termirc#readme",
+  "dependencies": {
+    "prettier": "^3.5.3"
+  }
+}
