@@ -1,11 +1,13 @@
 import blessed from 'blessed';
 import { screen } from './screen';
 
+const INPUT_HEIGHT = 3;
+
 export const roomList = blessed.list({
     parent: screen,
     label: ' My Rooms ',
     width: '20%',
-    height: '90%',
+    height: `100%-${INPUT_HEIGHT}`,
     top: 0,
     left: 0,
     border: 'line',
@@ -18,7 +20,7 @@ export const chatBox = blessed.box({
     parent: screen,
     label: ' Chat ',
     width: '80%',
-    height: '90%',
+    height: `100%-${INPUT_HEIGHT}`,
     top: 0,
     left: '20%',
     border: 'line',
@@ -37,7 +39,7 @@ export const input = blessed.textbox({
     bottom: 0,
     left: 0,
     width: '100%',
-    height: '10%',
+    height: INPUT_HEIGHT,
     border: 'line',
     inputOnFocus: true,
     style: { focus: { border: { fg: 'green' } } },
