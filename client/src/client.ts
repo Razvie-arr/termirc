@@ -1,9 +1,13 @@
 import { screen } from './ui/screen';
 import { input } from './ui/panes';
 import WebSocket from 'ws';
-import { handleClose, handleOpen } from './eventHandlers/connectionHandlers';
-import { handleMessage } from './eventHandlers/messageHandler';
-import { registerChatInputHandler } from './eventHandlers/registerChatInputHandler';
+import {
+    handleClose,
+    handleOpen,
+} from './eventHandlers/wsHandlers/connectionHandlers';
+import { registerChatInputHandler } from './eventHandlers/terminalHandlers/registerChatInputHandler';
+import { wsHandlers } from './eventHandlers/wsHandlers/wsHandlers';
+import { MessageType } from '../../shared/src/types/MessageType';
 
 registerChatInputHandler();
 
@@ -17,7 +21,13 @@ ws.on('open', () => {
 });
 
 ws.on('message', (raw) => {
-    handleMessage(raw);
+    const msg = JSON.parse(raw.toString());
+    const handler = wsHandlers[msg.type as MessageType];
+    if (handler) {
+        handler(msg);
+    } else {
+        console.warn('Unhandled message type:', msg.type);
+    }
 });
 
 ws.on('close', () => {
