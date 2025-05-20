@@ -2,8 +2,11 @@ import { Command } from './Command';
 import WebSocket from 'ws';
 import { roomService } from '../services/roomService';
 import { normalizeRoomName } from '../../../shared/src/utils/normalizeRoomName';
-import { sendError, sendInfo } from '../messageSenders/directMessageSender';
-import { sendUserRoomListBroadcast } from '../messageSenders/broadcastMessageSender';
+import { sendError } from '../messageSenders/directMessageSender';
+import {
+    sendSystemBroadcast,
+    sendUserRoomListBroadcast,
+} from '../messageSenders/broadcastMessageSender';
 
 export class PartCommand implements Command {
     readonly name = 'part';
@@ -14,8 +17,10 @@ export class PartCommand implements Command {
             return sendError(ws, 'Usage: /part #room');
         }
         roomService.partRoom(ws, room);
-        sendInfo(ws, `Left ${room}`);
-
         sendUserRoomListBroadcast();
     }
+}
+
+export function sendSystemLeftRoomMessage(nick: string, roomName: string) {
+    sendSystemBroadcast(roomName, `${nick} has left ${roomName}`);
 }
