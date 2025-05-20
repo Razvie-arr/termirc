@@ -1,22 +1,32 @@
 import { roomList } from '../ui/panes';
 import { screen } from '../ui/screen';
+import { RoomInfo } from '../../../shared/src/types/RoomInfo';
 
-const rooms: string[] = [];
+const rooms: RoomInfo[] = [];
+let active = '';
 
-export function setRooms(list: string[]) {
+export function setRooms(roomInfos: RoomInfo[]) {
     rooms.length = 0;
-    rooms.push(...list);
+    rooms.push(...roomInfos);
     redraw();
 }
 
-export function currentRooms() {
-    return rooms; // read-only copy if you want
+export function setActiveRoom(name: string) {
+    active = name;
+    redraw();
 }
 
 function redraw() {
     roomList.clearItems();
-    rooms.forEach((r) => roomList.addItem(r));
-    // keep selection sane
-    // if (roomList.selected === -1 && rooms.length) roomList.select(0);
+    rooms.forEach((r) => roomList.addItem(formatRoom(r)));
+
+    const idx = rooms.findIndex((r) => r.name === active);
+    if (idx >= 0) roomList.select(idx);
+    else if (rooms.length) roomList.select(0);
+
     screen.render();
+}
+
+function formatRoom(r: RoomInfo): string {
+    return `${r.name} (${r.memberCount})`;
 }

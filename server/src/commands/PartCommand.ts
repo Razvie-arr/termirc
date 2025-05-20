@@ -3,6 +3,7 @@ import WebSocket from 'ws';
 import { roomService } from '../services/roomService';
 import { normalizeRoomName } from '../../../shared/src/utils/normalizeRoomName';
 import { sendError, sendInfo } from '../messageSenders/directMessageSender';
+import { sendUserRoomListBroadcast } from '../messageSenders/broadcastMessageSender';
 
 export class PartCommand implements Command {
     readonly name = 'part';
@@ -14,5 +15,7 @@ export class PartCommand implements Command {
         }
         roomService.partRoom(ws, room);
         sendInfo(ws, `Left ${room}`);
+
+        sendUserRoomListBroadcast();
     }
 }

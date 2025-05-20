@@ -6,7 +6,7 @@ import { commandRegistry } from '../commands/CommandRegistry';
 import { sendError } from '../messageSenders/directMessageSender';
 import { roomService } from '../services/roomService';
 import { ChatMessage } from '../../../shared/src/types/UserInput';
-import { sendChatMessageBroadcast } from '../messageSenders/broadcaseMessageSender';
+import { sendChatMessageBroadcast } from '../messageSenders/broadcastMessageSender';
 
 export function handleMessage(ws: WebSocket, message: string) {
     if (!userService.getNickname(ws)) {
@@ -39,7 +39,7 @@ export function handleMessage(ws: WebSocket, message: string) {
 function handleChatMessage(ws: WebSocket, chatMessage: ChatMessage) {
     const nick = userService.getNickname(ws)!;
 
-    const room = roomService.getActiveRoom(ws);
+    const room = roomService.getUserActiveRoomName(ws);
     console.log('Active room: ', room);
     if (!room) {
         return sendError(ws, 'Join a room first with /join #room.');

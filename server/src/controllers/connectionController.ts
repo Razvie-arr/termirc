@@ -1,9 +1,14 @@
 import WebSocket from 'ws';
-import { sendInfo } from '../messageSenders/directMessageSender';
+import {
+    sendInfo,
+    sendUserRoomList,
+} from '../messageSenders/directMessageSender';
 import { userService } from '../services/userService';
+import { roomService } from '../services/roomService';
 
 export function handleConnection(ws: WebSocket) {
     sendInfo(ws, 'Welcome to termirc! Please choose a nickname:');
+    sendUserRoomList(ws, roomService.getUserRoomInfos(ws));
 }
 
 export function handleClose(ws: WebSocket) {

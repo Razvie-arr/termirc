@@ -3,7 +3,7 @@ import { screen } from './screen';
 
 export const roomList = blessed.list({
     parent: screen,
-    label: ' Rooms ',
+    label: ' My Rooms ',
     width: '20%',
     height: '90%',
     top: 0,

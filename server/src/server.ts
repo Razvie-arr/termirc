@@ -6,7 +6,7 @@ import {
 import { handleMessage } from './controllers/messageController';
 
 console.log('Starting Termirc server...');
-const wss = new WebSocketServer({ port: 8080 });
+export const wss = new WebSocketServer({ port: 8080 });
 console.log('WebSocket server running on port 8080...');
 
 wss.on('connection', (ws: WebSocket) => {

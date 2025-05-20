@@ -1,9 +1,9 @@
-import WebSocket from "ws";
-
-type Room = Set<WebSocket>;
+import WebSocket from 'ws';
+import { Room } from '../../../shared/src/types/Room';
+import { RoomInfo } from '../../../shared/src/types/RoomInfo';
 
 export class RoomService {
-    private rooms = new Map<string, Room>();
+    private rooms = new Map<string, Set<WebSocket>>();
     private activeRooms = new Map<WebSocket, string>();
 
     joinRoom(ws: WebSocket, room: string) {
@@ -29,17 +29,6 @@ export class RoomService {
         }
     }
 
-    getAllRooms(): { name: string; memberCount: number }[] {
-        return [...this.rooms.entries()].map(([name, set]) => ({
-            name,
-            memberCount: set.size,
-        }));
-    }
-
-    getActiveRoom(ws: WebSocket): string | undefined {
-        return this.activeRooms.get(ws);
-    }
-
     switchRoom(ws: WebSocket, room: string): boolean {
         const members = this.rooms.get(room);
         if (members && members.has(ws)) {
@@ -49,12 +38,40 @@ export class RoomService {
         return false;
     }
 
-    broadcast(room: string, message: string) {
-        this.rooms.get(room)?.forEach((client) => {
-            if (client.readyState === client.OPEN) {
-                client.send(message);
-            }
-        });
+    getAllRooms(): Room[] {
+        return [...this.rooms.entries()].map(([name, members]) => ({
+            name,
+            members,
+        }));
+    }
+
+    getAllRoomInfos(): RoomInfo[] {
+        return this.getAllRooms().map((room) => ({
+            name: room.name,
+            memberCount: room.members.size,
+        }));
+    }
+
+    getRoom(roomName: string): Room | undefined {
+        const members = this.rooms.get(roomName);
+        return members ? { name: roomName, members } : undefined;
+    }
+
+    getUserRooms(ws: WebSocket): Room[] {
+        return [...this.rooms.entries()]
+            .filter(([, members]) => members.has(ws))
+            .map(([name, members]) => ({ name, members }));
+    }
+
+    getUserRoomInfos(ws: WebSocket): RoomInfo[] {
+        return this.getUserRooms(ws).map((r) => ({
+            name: r.name,
+            memberCount: r.members.size,
+        }));
+    }
+
+    getUserActiveRoomName(ws: WebSocket): string | undefined {
+        return this.activeRooms.get(ws);
     }
 }
 

@@ -2,19 +2,21 @@ import { Command } from './Command';
 import WebSocket from 'ws';
 import { roomService } from '../services/roomService';
 import { sendInfo } from '../messageSenders/directMessageSender';
+import { RoomInfo } from '../../../shared/src/types/RoomInfo';
 
 export class ListCommand implements Command {
     readonly name = 'list';
 
     execute(ws: WebSocket, _args: string[]): void {
-        const rooms = roomService.getAllRooms();
-        if (rooms.length === 0) {
+        const roomsInfos: RoomInfo[] = roomService.getAllRoomInfos();
+        if (roomsInfos.length === 0) {
             return sendInfo(ws, 'No rooms available.');
         }
-        for (const { name, memberCount } of rooms) {
+        for (const roomInfo of roomsInfos) {
+            const memberCount = roomInfo.memberCount;
             sendInfo(
                 ws,
-                `${name} — ${memberCount} user${memberCount !== 1 ? 's' : ''}`,
+                `${roomInfo.name} — ${memberCount} user${memberCount !== 1 ? 's' : ''}`,
             );
         }
     }

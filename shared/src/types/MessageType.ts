@@ -5,4 +5,5 @@ export enum MessageType {
     Message = 'message',
     Command = 'command',
     RoomList = 'roomList',
+    ActiveRoom = 'activeRoom',
 }
