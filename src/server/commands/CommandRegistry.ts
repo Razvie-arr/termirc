@@ -2,7 +2,7 @@ import WebSocket from 'ws';
 import { Command } from './Command';
 import { JoinCommand } from './JoinCommand';
 import { PartCommand } from './PartCommand';
-import { CommandMessage } from '../../shared/types/UserInput';
+import { CommandMessage } from '@shared/types/UserInput';
 import { SwitchCommand } from './SwitchCommand';
 import { ListCommand } from './ListCommand';
 import { sendError } from '../messageSenders/directMessageSender';

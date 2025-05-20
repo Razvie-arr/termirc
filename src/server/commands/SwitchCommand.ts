@@ -1,7 +1,7 @@
 import { Command } from './Command';
 import WebSocket from 'ws';
 import { roomService } from '../services/roomService';
-import { normalizeRoomName } from '../../shared/utils/normalizeRoomName';
+import { normalizeRoomName } from '@shared/utils/normalizeRoomName';
 import { sendError, sendInfo } from '../messageSenders/directMessageSender';
 
 export class SwitchCommand implements Command {

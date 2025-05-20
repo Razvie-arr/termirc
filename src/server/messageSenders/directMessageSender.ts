@@ -1,4 +1,4 @@
-import { MessageType } from '../../shared/types/MessageType';
+import { MessageType } from '@shared/types/MessageType';
 import WebSocket from 'ws';
 
 export function sendInfo(ws: WebSocket, text: string) {
