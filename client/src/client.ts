@@ -1,13 +1,12 @@
 import './ui/screen';
 import './ui/panes';
-import './input/handler';
 import { screen } from './ui/screen';
 import { chatBox, input, roomList } from './ui/panes';
 import WebSocket from 'ws';
-import { MessageType } from '@shared/types/MessageType';
+import { MessageType } from '../../shared/src/types/MessageType';
 import { activeRoom } from './utils/activeRoom';
-import { parseUserInput } from '@shared/utils/userInputParser';
-import { normalizeRoomName } from '@shared/utils/normalizeRoomName';
+import { parseUserInput } from '../../shared/src/utils/userInputParser';
+import { normalizeRoomName } from '../../shared/src/utils/normalizeRoomName';
 
 input.focus();
 screen.key(['C-c'], () => process.exit(0));

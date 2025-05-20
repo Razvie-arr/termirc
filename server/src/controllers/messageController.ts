@@ -1,11 +1,11 @@
 import WebSocket from 'ws';
 import { userService } from '../services/userService';
-import { MessageType } from '@shared/types/MessageType';
-import { parseUserInput } from '@shared/utils/userInputParser';
+import { MessageType } from '../../../shared/src/types/MessageType';
+import { parseUserInput } from '../../../shared/src/utils/userInputParser';
 import { commandRegistry } from '../commands/CommandRegistry';
 import { sendError } from '../messageSenders/directMessageSender';
 import { roomService } from '../services/roomService';
-import { ChatMessage } from '@shared/types/UserInput';
+import { ChatMessage } from '../../../shared/src/types/UserInput';
 import { sendChatMessageBroadcast } from '../messageSenders/broadcaseMessageSender';
 
 export function handleMessage(ws: WebSocket, message: string) {
