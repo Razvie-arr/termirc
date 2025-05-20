@@ -11,12 +11,12 @@ import {
 export class SwitchCommand implements Command {
     readonly name = 'switch';
 
-    execute(ws: WebSocket, args: string[]): void {
+    async execute(ws: WebSocket, args: string[]) {
         const roomName = normalizeRoomName(args[0]);
         if (!roomName) {
             return sendError(ws, 'Usage: /switch #room');
         }
-        if (!roomService.switchRoom(ws, roomName)) {
+        if (!(await roomService.switchRoom(ws, roomName))) {
             return sendError(ws, `You’re not in ${roomName}.`);
         }
         sendInfo(ws, `Active room set to ${roomName}`);

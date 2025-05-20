@@ -5,16 +5,16 @@ import { RoomInfo } from '../../../shared/src/types/RoomInfo';
 import { wss } from '../server';
 import { RoomListPayload } from '../../../shared/src/types/RoomListPayload';
 
-export function sendSystemBroadcast(roomName: string, text: string) {
+export async function sendSystemBroadcast(roomName: string, text: string) {
     const message = JSON.stringify({
         type: MessageType.System,
         roomName: roomName,
         payload: text,
     });
-    sendMessageToRoom(roomService.getRoom(roomName)!, message);
+    sendMessageToRoom((await roomService.getRoom(roomName))!, message);
 }
 
-export function sendChatMessageBroadcast(
+export async function sendChatMessageBroadcast(
     roomName: string,
     from: string,
     text: string,
@@ -25,19 +25,19 @@ export function sendChatMessageBroadcast(
         from,
         payload: text,
     });
-    sendMessageToRoom(roomService.getRoom(roomName)!, message);
+    sendMessageToRoom((await roomService.getRoom(roomName))!, message);
 }
 
-export function sendUserRoomListBroadcast() {
-    wss.clients.forEach((ws) => {
-        const roomInfos: RoomInfo[] = roomService.getUserRoomInfos(ws);
+export async function sendUserRoomListBroadcast() {
+    for (const ws of wss.clients) {
+        const roomInfos: RoomInfo[] = await roomService.getUserRoomInfos(ws);
         const payload: RoomListPayload = {
             type: MessageType.RoomList,
             rooms: roomInfos,
         };
         const json = JSON.stringify(payload);
         if (ws.readyState === ws.OPEN) ws.send(json);
-    });
+    }
 }
 
 function sendMessageToRoom(room: Room, message: string) {

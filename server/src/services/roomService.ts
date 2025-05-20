@@ -6,7 +6,9 @@ export class RoomService {
     private rooms = new Map<string, Set<WebSocket>>();
     private activeRooms = new Map<WebSocket, string>();
 
-    joinRoom(ws: WebSocket, room: string) {
+    async joinRoom(ws: WebSocket, room: string) {
+        // await createRoom(room);
+
         if (!this.rooms.has(room)) {
             this.rooms.set(room, new Set());
         }
@@ -14,7 +16,7 @@ export class RoomService {
         this.activeRooms.set(ws, room);
     }
 
-    partRoom(ws: WebSocket, room: string) {
+    async partRoom(ws: WebSocket, room: string) {
         const members = this.rooms.get(room);
         if (!members) return;
 
@@ -29,7 +31,7 @@ export class RoomService {
         }
     }
 
-    switchRoom(ws: WebSocket, room: string): boolean {
+    async switchRoom(ws: WebSocket, room: string): Promise<boolean> {
         const members = this.rooms.get(room);
         if (members && members.has(ws)) {
             this.activeRooms.set(ws, room);
@@ -38,39 +40,39 @@ export class RoomService {
         return false;
     }
 
-    getAllRooms(): Room[] {
+    async getAllRooms(): Promise<Room[]> {
         return [...this.rooms.entries()].map(([name, members]) => ({
             name,
             members,
         }));
     }
 
-    getAllRoomInfos(): RoomInfo[] {
-        return this.getAllRooms().map((room) => ({
+    async getAllRoomInfos(): Promise<RoomInfo[]> {
+        return (await this.getAllRooms()).map((room) => ({
             name: room.name,
             memberCount: room.members.size,
         }));
     }
 
-    getRoom(roomName: string): Room | undefined {
+    async getRoom(roomName: string): Promise<Room | undefined> {
         const members = this.rooms.get(roomName);
         return members ? { name: roomName, members } : undefined;
     }
 
-    getUserRooms(ws: WebSocket): Room[] {
+    async getUserRooms(ws: WebSocket): Promise<Room[]> {
         return [...this.rooms.entries()]
             .filter(([, members]) => members.has(ws))
             .map(([name, members]) => ({ name, members }));
     }
 
-    getUserRoomInfos(ws: WebSocket): RoomInfo[] {
-        return this.getUserRooms(ws).map((r) => ({
+    async getUserRoomInfos(ws: WebSocket): Promise<RoomInfo[]> {
+        return (await this.getUserRooms(ws)).map((r) => ({
             name: r.name,
             memberCount: r.members.size,
         }));
     }
 
-    getUserActiveRoomName(ws: WebSocket): string | undefined {
+    async getUserActiveRoomName(ws: WebSocket): Promise<string | undefined> {
         return this.activeRooms.get(ws);
     }
 }

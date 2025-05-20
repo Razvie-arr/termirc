@@ -7,8 +7,8 @@ import { RoomInfo } from '../../../shared/src/types/RoomInfo';
 export class ListCommand implements Command {
     readonly name = 'list';
 
-    execute(ws: WebSocket, _args: string[]): void {
-        const roomsInfos: RoomInfo[] = roomService.getAllRoomInfos();
+    async execute(ws: WebSocket, _args: string[]) {
+        const roomsInfos: RoomInfo[] = await roomService.getAllRoomInfos();
         if (roomsInfos.length === 0) {
             return sendInfo(ws, 'No rooms available.');
         }

@@ -15,12 +15,12 @@ import {
 
 export class JoinCommand implements Command {
     name = 'join';
-    execute(ws: WebSocket, args: string[]) {
+    async execute(ws: WebSocket, args: string[]) {
         const room = normalizeRoomName(args[0]);
         if (!room) {
             return sendError(ws, 'Usage: /join #room');
         }
-        roomService.joinRoom(ws, room);
+        await roomService.joinRoom(ws, room);
         sendInfo(ws, `You joined ${room}`);
 
         executeAfterJoinActivities(ws, room);

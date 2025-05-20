@@ -11,12 +11,12 @@ import {
 export class PartCommand implements Command {
     readonly name = 'part';
 
-    execute(ws: WebSocket, args: string[]): void {
+    async execute(ws: WebSocket, args: string[]) {
         const room = normalizeRoomName(args[0]);
         if (!room) {
             return sendError(ws, 'Usage: /part #room');
         }
-        roomService.partRoom(ws, room);
+        await roomService.partRoom(ws, room);
         sendUserRoomListBroadcast();
     }
 }

@@ -8,22 +8,22 @@ import { roomService } from '../services/roomService';
 import { sendUserRoomListBroadcast } from '../messageSenders/broadcastMessageSender';
 import { sendSystemLeftRoomMessage } from '../commands/PartCommand';
 
-export function handleConnection(ws: WebSocket) {
+export async function handleConnection(ws: WebSocket) {
     sendInfo(ws, 'Welcome to termirc! Please choose a nickname:');
-    sendUserRoomList(ws, roomService.getUserRoomInfos(ws));
+    sendUserRoomList(ws, await roomService.getUserRoomInfos(ws));
 }
 
-export function handleClose(ws: WebSocket) {
-    partAllRooms(ws);
+export async function handleClose(ws: WebSocket) {
+    await partAllRooms(ws);
     userService.removeNickname(ws);
     console.log(`Client ${userService.getNickname(ws) ?? ''} disconnected`);
 }
 
-function partAllRooms(ws: WebSocket) {
-    const userRooms = roomService.getUserRooms(ws);
+async function partAllRooms(ws: WebSocket) {
+    const userRooms = await roomService.getUserRooms(ws);
     for (const room of userRooms) {
-        roomService.partRoom(ws, room.name);
+        await roomService.partRoom(ws, room.name);
         sendSystemLeftRoomMessage(userService.getNickname(ws)!, room.name);
     }
-    sendUserRoomListBroadcast();
+    await sendUserRoomListBroadcast();
 }
