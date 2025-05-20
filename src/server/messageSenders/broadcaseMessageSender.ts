@@ -1,4 +1,4 @@
-import { MessageType } from '../types/MessageType';
+import { MessageType } from '../../shared/types/MessageType';
 import { roomService } from '../services/roomService';
 
 export function sendSystemBroadcast(room: string, text: string) {

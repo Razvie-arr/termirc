@@ -1,7 +1,7 @@
 import { Command } from './Command';
 import { roomService } from '../services/roomService';
 import WebSocket from 'ws';
-import { normalizeRoomName } from '../utils/normalizeRoomName';
+import { normalizeRoomName } from '../../shared/utils/normalizeRoomName';
 import { sendError, sendInfo } from '../messageSenders/directMessageSender';
 import { userService } from '../services/userService';
 import { sendSystemBroadcast } from '../messageSenders/broadcaseMessageSender';

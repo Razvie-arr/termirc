@@ -6,8 +6,8 @@
   "scripts": {
     "build": "tsc",
     "start:server": "node dist/server.js",
-    "dev:server": "ts-node src/server.ts",
-    "dev:client": "ts-node src/client.ts"
+    "dev:server": "ts-node src/server/server.ts",
+    "dev:client": "ts-node src/client/client.ts"
   },
   "repository": {
     "type": "git",
@@ -22,10 +22,12 @@
   "homepage": "https://github.com/Razvie-arr/termirc#readme",
   "dependencies": {
     "@libsql/client": "^0.15.6",
+    "blessed": "^0.1.81",
     "drizzle-orm": "^0.43.1",
     "prettier": "^3.5.3"
   },
   "devDependencies": {
+    "@types/blessed": "^0.1.25",
     "@types/node": "^22.15.19",
     "@types/ws": "^8.18.1",
     "ts-node": "^10.9.2",
