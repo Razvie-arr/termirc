@@ -17,6 +17,5 @@ export class ListCommand implements Command {
                 `${name} — ${memberCount} user${memberCount !== 1 ? 's' : ''}`,
             );
         }
-        sendInfo(ws, 'End of /list.');
     }
 }
