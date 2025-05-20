@@ -4,8 +4,8 @@
   "description": "A minimalistic IRC-inspired chat application that runs entirely in the terminal. Based on Typescript and Node.js.",
   "main": "index.js",
   "scripts": {
-    "dev:server": "ts-node-dev --respawn -r tsconfig-paths/register --project server/tsconfig.json server/src/server.ts",
-    "dev:client": "ts-node-dev --respawn -r tsconfig-paths/register --project client/tsconfig.json client/src/client.ts",
+    "dev:server": "ts-node-dev --respawn --project server/tsconfig.json server/src/server.ts",
+    "dev:client": "ts-node-dev --respawn --project client/tsconfig.json client/src/client.ts",
     "dev": "concurrently -k \"npm run dev:server\" \"npm run dev:client\"",
     "build": "tsc -b",
     "start:client": "node dist/client/client.js",
