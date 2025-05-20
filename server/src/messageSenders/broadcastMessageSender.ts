@@ -4,6 +4,7 @@ import { Room } from '../../../shared/src/types/Room';
 import { RoomInfo } from '../../../shared/src/types/RoomInfo';
 import { wss } from '../server';
 import { RoomListPayload } from '../../../shared/src/types/RoomListPayload';
+import { addMessage } from '../db/messages';
 
 export async function sendSystemBroadcast(roomName: string, text: string) {
     const message = JSON.stringify({
@@ -25,6 +26,7 @@ export async function sendChatMessageBroadcast(
         from,
         payload: text,
     });
+    await addMessage(roomName, from, text);
     sendMessageToRoom((await roomService.getRoom(roomName))!, message);
 }
 

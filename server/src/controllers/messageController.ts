@@ -45,5 +45,5 @@ async function handleChatMessage(ws: WebSocket, chatMessage: ChatMessage) {
         return sendError(ws, 'Join a room first with /join #room.');
     }
 
-    sendChatMessageBroadcast(room, nick, chatMessage.content);
+    await sendChatMessageBroadcast(room, nick, chatMessage.content);
 }

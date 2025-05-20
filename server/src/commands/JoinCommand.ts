@@ -23,13 +23,13 @@ export class JoinCommand implements Command {
         await roomService.joinRoom(ws, room);
         sendInfo(ws, `You joined ${room}`);
 
-        executeAfterJoinActivities(ws, room);
+        await executeAfterJoinActivities(ws, room);
     }
 }
 
-const executeAfterJoinActivities = (ws: WebSocket, roomName: string) => {
+const executeAfterJoinActivities = async (ws: WebSocket, roomName: string) => {
     const nick = userService.getNickname(ws)!;
-    sendSystemBroadcast(roomName, `${nick} has joined ${roomName}`);
+    await sendSystemBroadcast(roomName, `${nick} has joined ${roomName}`);
     sendActiveRoom(ws, roomName);
-    sendUserRoomListBroadcast();
+    await sendUserRoomListBroadcast();
 };

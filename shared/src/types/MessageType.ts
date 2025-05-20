@@ -6,4 +6,5 @@ export enum MessageType {
     Command = 'command',
     RoomList = 'roomList',
     ActiveRoom = 'activeRoom',
+    RoomHistory = 'roomHistory',
 }

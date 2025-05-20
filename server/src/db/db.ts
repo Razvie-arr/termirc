@@ -1,4 +1,4 @@
-import { drizzle } from 'drizzle-orm/d1';
+import { drizzle } from 'drizzle-orm/libsql';
 
 export const db = drizzle({
     connection: 'file:db.sqlite',
