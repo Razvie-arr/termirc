@@ -25,6 +25,7 @@ export class UserService {
             '  /part <room>    – leave a chat room',
             '  /switch <room>  – switch to a joined room',
             '  /list  – list all available rooms',
+            '  /clear  – clear chat window',
             '',
         ].join('\n');
 

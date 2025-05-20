@@ -1,5 +1,5 @@
-import { screen } from './ui/screen';
-import { input } from './ui/panes';
+import { terminalScreen } from './ui/terminalScreen';
+import { terminalInput } from './ui/panes';
 import WebSocket from 'ws';
 import {
     handleClose,
@@ -8,11 +8,15 @@ import {
 import { registerChatInputHandler } from './eventHandlers/terminalHandlers/registerChatInputHandler';
 import { wsHandlers } from './eventHandlers/wsHandlers/wsHandlers';
 import { MessageType } from '../../shared/src/types/MessageType';
+import { registerScrollHandlers } from './eventHandlers/terminalHandlers/registerScrollHandlers';
+import { registerExitHandler } from './eventHandlers/terminalHandlers/registerExitHandler';
 
 registerChatInputHandler();
+registerExitHandler();
+registerScrollHandlers();
 
-input.focus();
-screen.render();
+terminalInput.focus();
+terminalScreen.render();
 
 export const ws = new WebSocket('ws://localhost:8080');
 

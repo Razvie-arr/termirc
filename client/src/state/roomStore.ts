@@ -1,5 +1,5 @@
 import { roomList } from '../ui/panes';
-import { screen } from '../ui/screen';
+import { terminalScreen } from '../ui/terminalScreen';
 import { RoomInfo } from '../../../shared/src/types/RoomInfo';
 
 const rooms: RoomInfo[] = [];
@@ -24,7 +24,7 @@ function redraw() {
     if (idx >= 0) roomList.select(idx);
     else if (rooms.length) roomList.select(0);
 
-    screen.render();
+    terminalScreen.render();
 }
 
 function formatRoom(r: RoomInfo): string {

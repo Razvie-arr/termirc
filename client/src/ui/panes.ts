@@ -1,10 +1,13 @@
-import blessed from 'blessed';
-import { screen } from './screen';
+import blessed, { Widgets } from 'blessed';
+import { terminalScreen } from './terminalScreen';
+import BoxElement = Widgets.BoxElement;
+import ListElement = Widgets.ListElement;
+import TextboxElement = Widgets.TextboxElement;
 
 const INPUT_HEIGHT = 3;
 
-export const roomList = blessed.list({
-    parent: screen,
+export const roomList: ListElement = blessed.list({
+    parent: terminalScreen,
     label: ' My Rooms ',
     width: '20%',
     height: `100%-${INPUT_HEIGHT}`,
@@ -16,8 +19,8 @@ export const roomList = blessed.list({
     style: { selected: { bg: 'blue' } },
 });
 
-export const chatBox = blessed.box({
-    parent: screen,
+export const terminalChatBox: BoxElement = blessed.box({
+    parent: terminalScreen,
     label: ' Chat ',
     width: '80%',
     height: `100%-${INPUT_HEIGHT}`,
@@ -34,8 +37,8 @@ export const chatBox = blessed.box({
     },
 });
 
-export const input = blessed.textbox({
-    parent: screen,
+export const terminalInput: TextboxElement = blessed.textbox({
+    parent: terminalScreen,
     bottom: 0,
     left: 0,
     width: '100%',

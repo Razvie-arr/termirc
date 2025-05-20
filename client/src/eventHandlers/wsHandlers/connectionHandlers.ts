@@ -1,12 +1,12 @@
-import { chatBox } from '../../ui/panes';
-import { screen } from '../../ui/screen';
+import { terminalChatBox } from '../../ui/panes';
+import { terminalScreen } from '../../ui/terminalScreen';
 
 export const handleOpen = () => {
-    chatBox.pushLine('{grey-fg}Connected. Waiting for server…{/}');
-    screen.render();
+    terminalChatBox.pushLine('{grey-fg}Connected. Waiting for server…{/}');
+    terminalScreen.render();
 };
 
 export const handleClose = () => {
-    chatBox.pushLine('{red-fg}Disconnected from server{/}');
-    screen.render();
+    terminalChatBox.pushLine('{red-fg}Disconnected from server{/}');
+    terminalScreen.render();
 };

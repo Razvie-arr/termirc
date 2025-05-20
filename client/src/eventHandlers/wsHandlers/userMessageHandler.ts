@@ -1,10 +1,10 @@
-import { chatBox } from '../../ui/panes';
-import { screen } from '../../ui/screen';
+import { terminalChatBox } from '../../ui/panes';
+import { terminalScreen } from '../../ui/terminalScreen';
 
 export const handleUserMessage = (msg: any) => {
-    chatBox.pushLine(
+    terminalChatBox.pushLine(
         `{gray-fg}[${msg.roomName}]{/} {blue-fg}${msg.from}:{/} ${msg.payload}`,
     );
-    chatBox.setScrollPerc(100);
-    screen.render();
+    terminalChatBox.setScrollPerc(100);
+    terminalScreen.render();
 };

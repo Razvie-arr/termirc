@@ -1,6 +1,6 @@
 import { MessageType } from '../../../../shared/src/types/MessageType';
-import { chatBox } from '../../ui/panes';
-import { screen } from '../../ui/screen';
+import { terminalChatBox } from '../../ui/panes';
+import { terminalScreen } from '../../ui/terminalScreen';
 
 const styleByType: Partial<Record<MessageType, string>> = {
     [MessageType.System]: '{magenta-fg}[system · everyone]{/} ',
@@ -10,8 +10,8 @@ const styleByType: Partial<Record<MessageType, string>> = {
 
 export const handleServerMessage = (msg: any) => {
     const prefix = styleByType[msg.type as MessageType] ?? '';
-    chatBox.pushLine(`${prefix}${msg.payload}`);
+    terminalChatBox.pushLine(`${prefix}${msg.payload}`);
 
-    chatBox.setScrollPerc(100);
-    screen.render();
+    terminalChatBox.setScrollPerc(100);
+    terminalScreen.render();
 };
