@@ -40,6 +40,7 @@ function handleChatMessage(ws: WebSocket, chatMessage: ChatMessage) {
     const nick = userService.getNickname(ws)!;
 
     const room = roomService.getActiveRoom(ws);
+    console.log('Active room: ', room);
     if (!room) {
         return sendError(ws, 'Join a room first with /join #room.');
     }
