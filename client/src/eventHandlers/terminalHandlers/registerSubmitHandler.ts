@@ -3,7 +3,7 @@ import { ws } from '../../client';
 import { clearChat } from '../../ui/actions/clearChat';
 import { resetInput } from '../../ui/actions/resetInput';
 
-export const registerChatInputHandler = () => {
+export const registerSubmitHandler = () => {
     terminalInput.on('submit', (text) => {
         if (!text) return resetInput();
         if (text.trim() === '/clear') return clearChat();

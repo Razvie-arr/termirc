@@ -7,6 +7,7 @@ import {
     sendSystemBroadcast,
     sendUserRoomListBroadcast,
 } from '../messageSenders/broadcastMessageSender';
+import { userService } from '../services/userService';
 
 export class PartCommand implements Command {
     readonly name = 'part';
@@ -17,10 +18,14 @@ export class PartCommand implements Command {
             return sendError(ws, 'Usage: /part #room');
         }
         await roomService.partRoom(ws, room);
-        sendUserRoomListBroadcast();
+        await sendUserRoomListBroadcast();
+        await sendSystemLeftRoomMessage(userService.getNickname(ws)!, room);
     }
 }
 
-export function sendSystemLeftRoomMessage(nick: string, roomName: string) {
-    sendSystemBroadcast(roomName, `${nick} has left ${roomName}`);
+export async function sendSystemLeftRoomMessage(
+    nick: string,
+    roomName: string,
+) {
+    await sendSystemBroadcast(roomName, `${nick} has left ${roomName}`);
 }

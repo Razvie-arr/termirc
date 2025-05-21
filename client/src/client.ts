@@ -5,13 +5,13 @@ import {
     handleClose,
     handleOpen,
 } from './eventHandlers/wsHandlers/connectionHandlers';
-import { registerChatInputHandler } from './eventHandlers/terminalHandlers/registerChatInputHandler';
+import { registerSubmitHandler } from './eventHandlers/terminalHandlers/registerSubmitHandler';
 import { wsHandlers } from './eventHandlers/wsHandlers/wsHandlers';
 import { MessageType } from '../../shared/src/types/MessageType';
 import { registerScrollHandlers } from './eventHandlers/terminalHandlers/registerScrollHandlers';
 import { registerExitHandler } from './eventHandlers/terminalHandlers/registerExitHandler';
 
-registerChatInputHandler();
+registerSubmitHandler();
 registerExitHandler();
 registerScrollHandlers();
 
